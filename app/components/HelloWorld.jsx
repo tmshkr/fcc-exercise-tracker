@@ -7,7 +7,12 @@ const dependenciesArray = [
   'react-dom - powers the rendering of elements to the DOM, typically paired with React',
   'webpack - for bundling all the javascript',
   'webpack-cli - command line support for webpack',
-  'jsx-loader - allows webpack to load jsx files'
+  'jsx-loader - allows webpack to load jsx files',
+  'foo',
+  'bar',
+  'baz',
+  'biz',
+  'bang'
 ];
 
 const componentsMade = [
