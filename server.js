@@ -4,6 +4,9 @@ const bodyParser = require('body-parser')
 
 const cors = require('cors')
 
+const expressGraphQL = require("express-graphql");
+const schema = require("./graphql/schema");
+
 const mongoose = require('mongoose')
 mongoose.connect(process.env.MLAB_URI || 'mongodb://localhost/exercise-track' )
 
@@ -12,19 +15,30 @@ app.use(cors())
 app.use(bodyParser.urlencoded({extended: false}))
 app.use(bodyParser.json())
 
+app.use(
+	"/graphql",
+	expressGraphQL({
+		schema,
+		graphiql: true
+	})
+);
+
 
 app.use(express.static('public'))
-// app.get('/', (req, res) => {
-//   res.sendFile(__dirname + '/views/index.html')
-// });
 
+
+app.get('/', (req, res) => {
+  res.sendFile(__dirname + '/views/index.html')
+});
+
+// react-starter
 // http://expressjs.com/en/starter/basic-routing.html
 app.get("/", function(request, response) {
   response.sendFile(__dirname + '/app/index.html');
 });
 
 
-const apiRouter = require('./routes/api')
+const apiRouter = require('./rest/api')
 app.use('/api/exercise', apiRouter)
 
 // Not found middleware
