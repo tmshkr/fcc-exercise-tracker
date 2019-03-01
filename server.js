@@ -33,12 +33,12 @@ app.get('/', (req, res) => {
 
 // react-starter
 // http://expressjs.com/en/starter/basic-routing.html
-// app.get("/", function(request, response) {
-//   response.sendFile(__dirname + '/app/index.html');
-// });
+app.get("/", function(request, response) {
+  response.sendFile(__dirname + '/app/index.html');
+});
 
 
-const apiRouter = require('./routes/api')
+const apiRouter = require('./rest/api')
 app.use('/api/exercise', apiRouter)
 
 // Not found middleware

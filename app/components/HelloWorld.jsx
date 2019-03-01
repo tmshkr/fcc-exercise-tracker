@@ -7,12 +7,7 @@ const dependenciesArray = [
   'react-dom - powers the rendering of elements to the DOM, typically paired with React',
   'webpack - for bundling all the javascript',
   'webpack-cli - command line support for webpack',
-  'jsx-loader - allows webpack to load jsx files',
-  'foo',
-  'bar',
-  'baz',
-  'biz',
-  'bang'
+  'jsx-loader - allows webpack to load jsx files'
 ];
 
 const componentsMade = [
@@ -24,7 +19,7 @@ const componentsMade = [
 const HelloWorld = function() {
   return (
     <div>
-      <h1>Hello World!</h1>
+      <h1>Hello World!!!</h1>
 
       <p>This is a starter <a href="http://glitch.com">Glitch</a> app for React! It uses 
         only a few dependencies to get you started on working with React:</p>
