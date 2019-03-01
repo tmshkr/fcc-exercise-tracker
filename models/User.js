@@ -1,8 +1,6 @@
-const shortid = require('shortid');
-const mongoose = require("mongoose");
-const Schema = mongoose.Schema;
-
-const Exercise = require("./Exercise");
+const shortid = require('shortid')
+const mongoose = require("mongoose")
+const Schema = mongoose.Schema
 
 const User = new Schema({
   username: {
@@ -19,11 +17,8 @@ const User = new Schema({
 })
 
 User.statics.findAll = function() {
-  return this.find();
+  return this.find()
 }
 
-User.statics.getExercises = function(userId) {
-  return Exercise.find({ userId });
-}
 
 module.exports = mongoose.model('User', User)

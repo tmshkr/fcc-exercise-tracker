@@ -1,3 +1,5 @@
+// REST API router from sample
+
 const User = require('../models/User');
 const Exercise = require('../models/Exercise');
 

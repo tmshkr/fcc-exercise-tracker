@@ -24,6 +24,17 @@ const Exercise = new Schema({
   }
 });
 
+Exercise.statics.findByUserId = function(userId, args) {
+  const { from, to, limit } = args
+  return this.find({
+    userId,
+    date: {
+      $gt: from ? new Date(from) : 0,
+      $lt: to ? new Date(to) : Date.now()
+    }})
+    .limit(limit)
+}
+
 // validate userId, and add "username" to the exercise instance
 Exercise.pre('save', function(next) {
   mongoose.model('User').findById(this.userId, (err, user) => {

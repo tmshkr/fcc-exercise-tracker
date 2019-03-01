@@ -17,7 +17,12 @@ const UserType = new GraphQLObjectType({
 		username: { type: GraphQLString },
     exercises: {
       type: new GraphQLList(ExerciseType),
-      resolve: ({ id }) => User.getExercises(id)
+      args: {
+        from: { type: GraphQLString },
+        to: { type: GraphQLString },
+        limit: { type: GraphQLInt }
+      },
+      resolve: ({ id }, args) => Exercise.findByUserId(id, args)
     }
 	})
 });
