@@ -7,8 +7,8 @@ const {
 	GraphQLNonNull
 } = require("graphql");
 
-const User = require('../models/User');
-const Exercise = require('../models/Exercise');
+const Users = require('../models/User');
+const Exercises = require('../models/Exercise');
 
 const UserType = new GraphQLObjectType({
 	name: "User",
@@ -22,7 +22,7 @@ const UserType = new GraphQLObjectType({
         to: { type: GraphQLString },
         limit: { type: GraphQLInt }
       },
-      resolve: ({ id }, args) => Exercise.findByUserId(id, args)
+      resolve: ({ id }, args) => Exercises.findByUserId(id, args)
     }
 	})
 });
@@ -44,17 +44,39 @@ const RootQueryType = new GraphQLObjectType({
   fields: {
     users: {
 			type: new GraphQLList(UserType),
-			resolve: () => User.findAll()
+			resolve: () => Users.findAll()
 		},
     user: {
       type: UserType,
       args: { id: { type: GraphQLString }},
-      resolve: (parentValue, { id }) => User.findById(id)
+      resolve: (parentValue, { id }) => Users.findById(id)
+    }
+  }
+})
+
+const mutation = new GraphQLObjectType({
+  name: "Mutation",
+  fields: {
+    addUser: {
+      type: UserType,
+      args: { username: { type: new GraphQLNonNull(GraphQLString) }},
+      resolve: (parentValue, { username }) => Users.newUser(username)
+    },
+    addExercise: {
+      type: ExerciseType,
+      args: {
+        userId: { type: new GraphQLNonNull(GraphQLString) },
+        description: { type: GraphQLString },
+        duration: { type: GraphQLInt },
+        date: { type: GraphQLString }
+      },
+      resolve: (parentValue, args) => Exercises.addExercise(args)
     }
   }
 })
 
 
 module.exports = new GraphQLSchema({
-	query: RootQueryType
+	query: RootQueryType,
+  mutation
 });

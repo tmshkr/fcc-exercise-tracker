@@ -20,5 +20,10 @@ User.statics.findAll = function() {
   return this.find()
 }
 
+User.statics.newUser = function(username) {
+  const user = new this({username})
+  return user.save()
+}
+
 
 module.exports = mongoose.model('User', User)

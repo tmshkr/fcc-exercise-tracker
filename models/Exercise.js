@@ -35,6 +35,11 @@ Exercise.statics.findByUserId = function(userId, args) {
     .limit(limit)
 }
 
+Exercise.statics.addExercise = function(args) {
+  const exercise = new this(args);
+  return exercise.save();
+}
+
 // validate userId, and add "username" to the exercise instance
 Exercise.pre('save', function(next) {
   mongoose.model('User').findById(this.userId, (err, user) => {
@@ -45,9 +50,6 @@ Exercise.pre('save', function(next) {
       return next(err)
     }
     this.username = user.username
-    if(!this.date) {
-      this.date = Date.now()
-    }
     next();
   });
 });

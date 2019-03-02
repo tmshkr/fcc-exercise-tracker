@@ -1,38 +1,41 @@
 {
-	"name": "fcc-exercise-tracker",
-	"version": "0.1.0",
-	"description": "A REST API project, part of Free Code Camp's curriculum",
-	"main": "server.js",
-	"scripts": {
-		"build": "webpack",
-    "start": "webpack && node server.js"
-	},
-	"dependencies": {
-    "axios": "^0.15.3",
-		"express": "^4.14.0",
-		"mongoose": "^4.7.2",
-		"mongodb": "^2.2.14",
-		"body-parser": "^1.15.2",
-		"cors": "^2.8.1",
-		"shortid": "^2.2.6",
+  "name": "fcc-exercise-tracker",
+  "version": "0.1.0",
+  "description": "A GraphQL API project, based on Free Code Camp's curriculum",
+  "main": "server.js",
+  "scripts": {
+    "build": "webpack",
+    "server": "webpack && node server.js",
+    "sass": "sass client/app.scss public/style.css --watch",
+    "start": "concurrently 'npm run sass' 'npm run server'"
+  },
+  "dependencies": {
+    "express": "^4.14.0",
+    "mongoose": "^4.7.2",
+    "mongodb": "^2.2.14",
+    "body-parser": "^1.15.2",
+    "cors": "^2.8.1",
+    "shortid": "^2.2.6",
     "express-graphql": "^0.6.1",
-		"graphql": "^0.8.2",
+    "graphql": "^0.8.2",
     "jsx-loader": "^0.13.2",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
     "webpack": "^4.1.1",
-    "webpack-cli": "^3.2.3"
-	},
-	"engines": {
-		"node": "8.x"
-	},
-	"repository": {
-		"url": "https://gomix.com/#!/project/welcome-project"
-	},
-	"license": "MIT",
-	"keywords": [
-		"node",
-		"gomix",
-		"express"
-	]
+    "webpack-cli": "^3.2.3",
+    "sass": "^1.17.2",
+    "concurrently": "^4.1.0"
+  },
+  "engines": {
+    "node": "8.x"
+  },
+  "repository": {
+    "url": "https://api.glitch.com/tmshkr-fcc-exercise-tracker/git"
+  },
+  "license": "MIT",
+  "keywords": [
+    "node",
+    "gomix",
+    "express"
+  ]
 }
