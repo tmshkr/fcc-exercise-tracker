@@ -33,4 +33,4 @@ const HelloWorld = function() {
   );
 }
 
-module.exports = HelloWorld;
+// module.exports = HelloWorld;

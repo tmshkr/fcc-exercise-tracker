@@ -6,25 +6,31 @@
   "scripts": {
     "build": "webpack",
     "server": "webpack && node server.js",
-    "sass": "sass client/app.scss public/style.css --watch",
+    "sass": "sass public/main.scss public/main.css --watch",
     "start": "concurrently 'npm run sass' 'npm run server'"
   },
   "dependencies": {
-    "express": "^4.14.0",
-    "mongoose": "^4.7.2",
-    "mongodb": "^2.2.14",
     "body-parser": "^1.15.2",
     "cors": "^2.8.1",
-    "shortid": "^2.2.6",
+    "express": "^4.14.0",
     "express-graphql": "^0.6.1",
     "graphql": "^0.8.2",
-    "jsx-loader": "^0.13.2",
+    "material-ui": "^0.20.2",
+    "mongodb": "^2.2.14",
+    "mongoose": "^4.7.2",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
-    "webpack": "^4.1.1",
-    "webpack-cli": "^3.2.3",
+    "shortid": "^2.2.6"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.3.4",
+    "@babel/preset-env": "^7.3.4",
+    "@babel/preset-react": "^7.0.0",
+    "babel-loader": "^8.0.5",
+    "concurrently": "^4.1.0",
     "sass": "^1.17.2",
-    "concurrently": "^4.1.0"
+    "webpack": "^4.29.6",
+    "webpack-cli": "^3.2.3"
   },
   "engines": {
     "node": "8.x"
@@ -35,7 +41,6 @@
   "license": "MIT",
   "keywords": [
     "node",
-    "gomix",
     "express"
   ]
 }

@@ -4,9 +4,10 @@
 }
 
 body {
-  background: #333;
+  background: #111;
   font-family: sans-serif;
-  color: #fff;
+  text-align: center;
+  color: #dadada;
 }
 
-/*# sourceMappingURL=style.css.map */
+/*# sourceMappingURL=main.css.map */
