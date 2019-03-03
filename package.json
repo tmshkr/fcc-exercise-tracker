@@ -7,23 +7,28 @@
     "build": "webpack",
     "server": "webpack && node server.js",
     "sass": "sass public/main.scss public/main.css --watch",
-    "start": "concurrently 'npm run sass' 'npm run server'"
+    "dev": "concurrently 'npm run sass' 'npm run server'",
+    "start": "npm run dev"
   },
   "dependencies": {
+    "@material-ui/core": "^3.6.2",
+    "@material-ui/icons": "^3.0.1",
+    "@material-ui/styles": "^3.0.0-alpha.10",
     "body-parser": "^1.15.2",
     "cors": "^2.8.1",
     "express": "^4.14.0",
     "express-graphql": "^0.6.1",
     "graphql": "^0.8.2",
-    "material-ui": "^0.20.2",
     "mongodb": "^2.2.14",
     "mongoose": "^4.7.2",
+    "prop-types": "^15.7.2",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
     "shortid": "^2.2.6"
   },
   "devDependencies": {
     "@babel/core": "^7.3.4",
+    "@babel/plugin-proposal-class-properties": "^7.3.4",
     "@babel/preset-env": "^7.3.4",
     "@babel/preset-react": "^7.0.0",
     "babel-loader": "^8.0.5",
