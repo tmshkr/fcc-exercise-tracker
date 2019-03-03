@@ -6,13 +6,16 @@
 body {
   // background: #111;
   margin: 0;
+  height: 100vh;
   font-family: sans-serif;
   text-align: center;
-  color: #dadada;
+  display: grid;
+  align-content: center;
+  // color: #dadada;
 }
 
 #main {
-  h1 {
-    // color: red;
-  }
+  width: 100%;
+  max-width: 800px;
+  margin: 1em auto;
 }
