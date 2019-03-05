@@ -15,8 +15,8 @@ const User = new Schema({
     default: shortid.generate
   },
   created: {
-    type: Date,
-    default: Date.now()
+    type: Number,
+    default: Date.now
   }
 })
 

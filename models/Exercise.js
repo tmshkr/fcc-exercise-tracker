@@ -13,8 +13,8 @@ const Exercise = new Schema({
     min: [1, 'duration too short']
   },
   date: {
-    type: Date,
-    default: Date.now()
+    type: Number,
+    default: Date.now
   },
   username: String,
   userId: {

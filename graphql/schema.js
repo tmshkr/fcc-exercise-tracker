@@ -2,8 +2,10 @@ const {
 	GraphQLObjectType,
 	GraphQLString,
 	GraphQLInt,
+  GraphQLFloat,
 	GraphQLSchema,
 	GraphQLList,
+  GraphQLID,
 	GraphQLNonNull
 } = require("graphql");
 
@@ -22,13 +24,13 @@ const UserType = new GraphQLObjectType({
 	fields: () => ({
 		id: { type: GraphQLString },
 		username: { type: GraphQLString },
-    created: { type: GraphQLString },
+    created: { type: GraphQLFloat },
     error: { type: ErrorType },
     exercises: {
       type: new GraphQLList(ExerciseType),
       args: {
-        from: { type: GraphQLString },
-        to: { type: GraphQLString },
+        from: { type: GraphQLFloat },
+        to: { type: GraphQLFloat },
         limit: { type: GraphQLInt }
       },
       resolve: ({ id }, args) => Exercises.findByUserId(id, args)
@@ -44,7 +46,7 @@ const ExerciseType = new GraphQLObjectType({
     description: { type: GraphQLString },
     duration: { type: GraphQLInt },
     userId: { type: GraphQLString },
-    date: { type: GraphQLString }
+    date: { type: GraphQLFloat }
 	})
 });
 
@@ -57,7 +59,7 @@ const RootQueryType = new GraphQLObjectType({
 		},
     user: {
       type: UserType,
-      args: { id: { type: GraphQLString }},
+      args: { id: { type: GraphQLID }},
       resolve: (parentValue, { id }) => Users.findById(id)
     }
   }
@@ -77,7 +79,7 @@ const mutation = new GraphQLObjectType({
         userId: { type: new GraphQLNonNull(GraphQLString) },
         description: { type: GraphQLString },
         duration: { type: GraphQLInt },
-        date: { type: GraphQLString }
+        date: { type: GraphQLFloat }
       },
       resolve: (parentValue, args) => Exercises.addExercise(args)
     }

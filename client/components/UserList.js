@@ -13,6 +13,8 @@ import TextField from '@material-ui/core/TextField';
 import { graphql } from "react-apollo";
 import gql from "graphql-tag";
 
+import { Link } from "react-router-dom";
+
 
 
 
@@ -28,25 +30,20 @@ const styles = theme => ({
   }
 });
 
-function ListItemLink(props) {
-  return <ListItem button component="a" {...props} />;
-}
 
 class UserList extends Component {
   constructor(props) {
     super(props);
     this.state = {
       newUsername: '',
-      error: false
+      error: null
     }
   }
   
   addUser(username) {
     const { data, mutate } = this.props;
 		mutate({
-      variables: {
-        username
-      }
+      variables: { username }
     })
     .then(({ data }) => {
       const { error } = data.addUser;
@@ -59,7 +56,7 @@ class UserList extends Component {
     const { code } = error;
     if(code === 11000) {
       this.setState({ error: "Username taken" });
-      setTimeout(() => this.setState({ error: null }), 3000);
+      setTimeout(() => this.setState({ error: null }), 1500);
     }
   }
   
@@ -71,18 +68,21 @@ class UserList extends Component {
     if (e.which === 13) {
       this.addUser(this.state.newUsername);
       this.setState({ newUsername: ''});
+      e.target.blur()
     }
   }
   
   renderListItem(user) {
     const { id, username } = user;
     return (
-      <ListItem button key={id}>
-        <ListItemIcon>
-          <PersonIcon />
-        </ListItemIcon>
-        <ListItemText primary={username} />
-      </ListItem>
+      <Link key={id} to={`user/${id}/exercises`}>
+        <ListItem button>
+          <ListItemIcon>
+            <PersonIcon />
+          </ListItemIcon>
+          <ListItemText primary={username} />
+        </ListItem>
+      </Link>
     );
   }
   
@@ -97,8 +97,8 @@ class UserList extends Component {
             <TextField
               error={error && true}
               disabled={error && true}
-              label="Add User"
-              value={this.state.error || this.state.newUsername}
+              label={error || "Add User"}
+              value={error ? "" : this.state.newUsername}
               onChange={e => this.handleChange(e, "newUsername")}
               onKeyPress={this.hanldeKeyPress.bind(this)}
               className={classNames(classes.textField)}
@@ -116,15 +116,15 @@ UserList.propTypes = {
 };
 
 const mutation = gql`
-mutation AddUser($username: String!) {
-  addUser(username: $username) {
-    id
-    username
-    error {
-      code
+  mutation AddUser($username: String!) {
+    addUser(username: $username) {
+      id
+      username
+      error {
+        code
+      }
     }
   }
-}
 `
 
 
