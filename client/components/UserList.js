@@ -36,7 +36,8 @@ class UserList extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      newUsername: ''
+      newUsername: '',
+      error: false
     }
   }
   
@@ -47,7 +48,19 @@ class UserList extends Component {
         username
       }
     })
+    .then(({ data }) => {
+      const { error } = data.addUser;
+      if(error) this.displayError(error);
+    })
     .then(() => data.refetch());
+  }
+  
+  displayError(error) {
+    const { code } = error;
+    if(code === 11000) {
+      this.setState({ error: "Username taken" });
+      setTimeout(() => this.setState({ error: null }), 3000);
+    }
   }
   
   handleChange(e, name) {
@@ -74,17 +87,18 @@ class UserList extends Component {
   }
   
   render() {
-    const { classes, data, error } = this.props;
+    const { classes, data } = this.props;
+    const { error } = this.state;
     
-    if(error) console.log(error);
-
     return (
       <div className={classes.root}>
         <List component="nav">
           <ListItem>
             <TextField
+              error={error && true}
+              disabled={error && true}
               label="Add User"
-              value={this.state.newUsername}
+              value={this.state.error || this.state.newUsername}
               onChange={e => this.handleChange(e, "newUsername")}
               onKeyPress={this.hanldeKeyPress.bind(this)}
               className={classNames(classes.textField)}
@@ -102,13 +116,16 @@ UserList.propTypes = {
 };
 
 const mutation = gql`
-    mutation AddUser($username: String!) {
-      addUser(username: $username) {
-        id
-        username
+mutation AddUser($username: String!) {
+  addUser(username: $username) {
+    id
+    username
+    error {
+      code
     }
   }
-`;
+}
+`
 
 
 const query = gql`
