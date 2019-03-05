@@ -10,11 +10,20 @@ const {
 const Users = require('../models/User');
 const Exercises = require('../models/Exercise');
 
+const ErrorType = new GraphQLObjectType({
+  name: "Error",
+  fields: () => ({
+    code: { type: GraphQLInt }
+  })
+});
+
 const UserType = new GraphQLObjectType({
 	name: "User",
 	fields: () => ({
 		id: { type: GraphQLString },
 		username: { type: GraphQLString },
+    created: { type: GraphQLString },
+    error: { type: ErrorType },
     exercises: {
       type: new GraphQLList(ExerciseType),
       args: {

@@ -13,16 +13,20 @@ const User = new Schema({
     type: String,
     index: true,
     default: shortid.generate
+  },
+  created: {
+    type: Date,
+    default: Date.now()
   }
 })
 
 User.statics.findAll = function() {
-  return this.find()
+  return this.find().sort("-created")
 }
 
 User.statics.newUser = function(username) {
   const user = new this({username})
-  return user.save()
+  return user.save().catch(err => ({ error: { code: err.code }}))
 }
 
 

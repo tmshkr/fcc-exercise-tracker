@@ -1,8 +1,5 @@
-* {
-  box-sizing: border-box;
-}
-
 body {
+  background: #424242;
   margin: 0;
   height: 100vh;
   font-family: sans-serif;
@@ -13,7 +10,8 @@ body {
 
 #main {
   width: 100%;
-  max-width: 800px;
+  min-height: 50vh;
+  max-width: 500px;
   margin: 1em auto;
 }
 
