@@ -15,7 +15,7 @@ class App extends Component {
         <Switch>
           <Route exact path={"/"} component={UserList} />
           <Route path={"/users"} component={UserList} />
-          <Route path={"/user/:id/exercises"} component={ExerciseList} />
+          <Route path={"/user/:username/exercises"} component={ExerciseList} />
         </Switch>
       </BrowserRouter>
     );

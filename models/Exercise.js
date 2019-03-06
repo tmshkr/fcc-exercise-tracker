@@ -2,14 +2,17 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const Exercise = new Schema({
-  description: {
+  title: {
     type: String,
     required: true,
-    maxlength: [20, 'description too long']
+    maxlength: [20, 'title too long']
+  },
+  description: {
+    type: String,
+    maxlength: [140, 'description too long']
   },
   duration: {
     type: Number,
-    required: true,
     min: [1, 'duration too short']
   },
   date: {
@@ -28,6 +31,17 @@ Exercise.statics.findByUserId = function(userId, args) {
   const { from, to, limit } = args
   return this.find({
     userId,
+    date: {
+      $gt: from ? new Date(from) : 0,
+      $lt: to ? new Date(to) : Date.now()
+    }})
+    .limit(limit)
+}
+
+Exercise.statics.findByUsername = function(username, args) {
+  const { from, to, limit } = args
+  return this.find({
+    username,
     date: {
       $gt: from ? new Date(from) : 0,
       $lt: to ? new Date(to) : Date.now()

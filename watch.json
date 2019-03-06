@@ -12,8 +12,6 @@
       "node-modules"
     ],
     "include": [
-      "\\.js$",
-      "\\.jsx$",
       "\\.json"
     ]
   },

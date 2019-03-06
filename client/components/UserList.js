@@ -9,6 +9,8 @@ import ListItemText from '@material-ui/core/ListItemText';
 import PersonIcon from '@material-ui/icons/Person';
 import PersonAddIcon from '@material-ui/icons/PersonAdd';
 import TextField from '@material-ui/core/TextField';
+import Button from '@material-ui/core/Button';
+
 
 import { graphql } from "react-apollo";
 import gql from "graphql-tag";
@@ -74,15 +76,18 @@ class UserList extends Component {
   
   renderListItem(user) {
     const { id, username } = user;
+    const { history } = this.props;
     return (
-      <Link key={id} to={`user/${id}/exercises`}>
-        <ListItem button>
+        <ListItem
+          button
+          key={id}
+          onClick={() => history.push(`user/${username}/exercises`)}
+        >
           <ListItemIcon>
             <PersonIcon />
           </ListItemIcon>
           <ListItemText primary={username} />
         </ListItem>
-      </Link>
     );
   }
   

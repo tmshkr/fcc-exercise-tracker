@@ -5,16 +5,15 @@
   "main": "server.js",
   "scripts": {
     "build": "webpack",
-    "server": "webpack && node server.js",
+    "server": "nodemon server.js",
     "sass": "sass public/main.scss public/main.css --watch",
     "dev": "concurrently 'npm run sass' 'npm run server'",
-    "start": "npm run dev"
+    "start": "npm run server"
   },
   "dependencies": {
     "@material-ui/core": "^3.6.2",
     "@material-ui/icons": "^3.0.1",
     "@material-ui/styles": "^3.0.0-alpha.10",
-    "apollo-boost": "^0.3.1",
     "apollo-cache-inmemory": "^1.5.1",
     "apollo-client": "^2.5.1",
     "apollo-link-http": "^1.5.11",
@@ -32,8 +31,8 @@
     "react-apollo": "^2.5.1",
     "react-dom": "^16.2.0",
     "react-router": "^4.3.1",
-    "shortid": "^2.2.6",
-    "react-router-dom": "^4.3.1"
+    "react-router-dom": "^4.3.1",
+    "shortid": "^2.2.6"
   },
   "devDependencies": {
     "@babel/core": "^7.3.4",
@@ -42,6 +41,7 @@
     "@babel/preset-react": "^7.0.0",
     "babel-loader": "^8.0.5",
     "concurrently": "^4.1.0",
+    "nodemon": "^1.18.10",
     "sass": "^1.17.2",
     "webpack": "^4.29.6",
     "webpack-cli": "^3.2.3"
