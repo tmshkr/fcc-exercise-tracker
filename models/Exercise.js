@@ -1,7 +1,13 @@
+const shortid = require('shortid')
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const Exercise = new Schema({
+  _id: {
+    type: String,
+    index: true,
+    default: shortid.generate
+  },
   title: {
     type: String,
     required: true,

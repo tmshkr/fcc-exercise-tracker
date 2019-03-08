@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
+import { graphql } from "react-apollo";
+import gql from "graphql-tag";
+
 import { withStyles } from '@material-ui/core/styles';
 import List from '@material-ui/core/List';
 import TextField from '@material-ui/core/TextField';
@@ -9,12 +12,7 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import FitnessCenterIcon from '@material-ui/icons/FitnessCenter';
 import Button from '@material-ui/core/Button';
-
-
-import { graphql } from "react-apollo";
-import gql from "graphql-tag";
-
-import { Link } from "react-router-dom";
+import Typography from '@material-ui/core/Typography';
 
 
 const styles = theme => ({
@@ -25,7 +23,10 @@ const styles = theme => ({
   textField: {
     marginLeft: theme.spacing.unit * 2,
     marginRight: theme.spacing.unit * 2,
-    width: "100%",
+    width: "100%"
+  },
+  dialog: {
+    margin: theme.spacing.unit * 5
   }
 });
 
@@ -42,9 +43,8 @@ class ExerciseList extends Component {
   addExercise(title) {
     const { data, mutate } = this.props;
     const { id } = data.user;
-		mutate({
-      variables: { title, userId: id }
-    })
+		
+    mutate({ variables: { title, userId: id }})
     .then(({ data }) => {
       const { error } = data.addExercise;
       if(error) this.displayError(error);
@@ -60,14 +60,22 @@ class ExerciseList extends Component {
     if (e.which === 13) {
       this.addExercise(this.state.newExercise);
       this.setState({ newExercise: ''});
-      e.target.blur()
     }
   }
   
   renderListItem(exercise) {
     const { id, title } = exercise;
+    const { history, match } = this.props;
+    const { username } = match.params;
+    
+    const url = `/user/${username}/exercise/${id}`;
+    
     return (
-      <ListItem button key={id}>
+      <ListItem
+        button
+        key={id}
+        onClick={() => history.push(url)}
+      >
         <ListItemIcon>
           <FitnessCenterIcon />
         </ListItemIcon>
@@ -77,16 +85,30 @@ class ExerciseList extends Component {
   }
   
   render() {
-    const { classes, data } = this.props;
+    const { classes, data, history } = this.props;
     const { error } = this.state;
     
     if(!data.user) return <div></div>;
     
     const { exercises } = data.user;
     
+    const noExercisesDialog = (
+      <div className={classes.dialog}>
+        <Typography component="p" variant="subtitle1" gutterBottom>
+          Add an exercise to get started
+        </Typography>
+      </div>
+    )
+    
     return (
       <div className={classes.root}>
         <List component="nav">
+          <Button onClick={history.goBack}>
+            Go Back
+          </Button>
+          { (exercises.length > 0)
+            ? exercises.map(exercise => this.renderListItem(exercise))
+            : noExercisesDialog }
           <ListItem>
             <TextField
               error={error && true}
@@ -98,11 +120,7 @@ class ExerciseList extends Component {
               className={classNames(classes.textField)}
             />
           </ListItem>
-          { exercises && exercises.map(exercise => this.renderListItem(exercise))}
         </List>
-        <Button component={Link} to="/users">
-          Go Back
-        </Button>
       </div>
     );
   }
@@ -110,6 +128,8 @@ class ExerciseList extends Component {
 
 ExerciseList.propTypes = {
   classes: PropTypes.object.isRequired,
+  data: PropTypes.object.isRequired,
+  history: PropTypes.object.isRequired
 };
 
 const mutation = gql`

@@ -8,9 +8,11 @@
     "server": "nodemon server.js",
     "sass": "sass public/main.scss public/main.css --watch",
     "dev": "concurrently 'npm run sass' 'npm run server'",
-    "start": "npm run server"
+    "start": "npm run build && npm run server"
   },
   "dependencies": {
+    "@date-io/date-fns": "^0.0.2",
+    "@date-io/moment": "^1.1.0",
     "@material-ui/core": "^3.6.2",
     "@material-ui/icons": "^3.0.1",
     "@material-ui/styles": "^3.0.0-alpha.10",
@@ -20,10 +22,13 @@
     "body-parser": "^1.15.2",
     "classnames": "^2.2.6",
     "cors": "^2.8.1",
+    "date-fns": "^2.0.0-alpha.27",
     "express": "^4.14.0",
     "express-graphql": "^0.6.1",
     "graphql": "^0.8.2",
     "graphql-tag": "^2.10.1",
+    "material-ui-pickers": "^2.2.4",
+    "moment": "^2.24.0",
     "mongodb": "^2.2.14",
     "mongoose": "^4.7.2",
     "prop-types": "^15.7.2",

@@ -29,7 +29,7 @@ User.statics.findByUsername = function(username) {
 }
 
 User.statics.newUser = function(username) {
-  const user = new this({username})
+  const user = new this({ username })
   return user.save().catch(err => ({ error: { code: err.code }}))
 }
 

@@ -44,9 +44,8 @@ class UserList extends Component {
   
   addUser(username) {
     const { data, mutate } = this.props;
-		mutate({
-      variables: { username }
-    })
+		
+    mutate({ variables: { username }})
     .then(({ data }) => {
       const { error } = data.addUser;
       if(error) this.displayError(error);
@@ -77,11 +76,12 @@ class UserList extends Component {
   renderListItem(user) {
     const { id, username } = user;
     const { history } = this.props;
+    const url = `/user/${username}/exercises`;
     return (
         <ListItem
           button
           key={id}
-          onClick={() => history.push(`user/${username}/exercises`)}
+          onClick={() => history.push(url)}
         >
           <ListItemIcon>
             <PersonIcon />
@@ -118,6 +118,9 @@ class UserList extends Component {
 
 UserList.propTypes = {
   classes: PropTypes.object.isRequired,
+  data: PropTypes.object.isRequired,
+  history: PropTypes.object.isRequired,
+  mutate: PropTypes.func.isRequired
 };
 
 const mutation = gql`
