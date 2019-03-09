@@ -15,11 +15,13 @@ const Exercise = new Schema({
   },
   description: {
     type: String,
+    default: '',
     maxlength: [140, 'description too long']
   },
   duration: {
     type: Number,
-    min: [1, 'duration too short']
+    default: 0,
+    min: [0, 'duration cannot be negative']
   },
   date: {
     type: Number,
@@ -58,6 +60,10 @@ Exercise.statics.findByUsername = function(username, args) {
 Exercise.statics.addExercise = function(args) {
   const exercise = new this(args);
   return exercise.save();
+}
+
+Exercise.statics.editExercise = function(args) {
+  return this.findByIdAndUpdate(args.id, { $set: args }, { new: true });
 }
 
 // validate userId, and add "username" to the exercise instance

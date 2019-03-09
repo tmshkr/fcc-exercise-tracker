@@ -68,6 +68,13 @@ const RootQueryType = new GraphQLObjectType({
         if(id) return Users.findById(id)
         if(username) return Users.findByUsername(username)
       }
+    },
+    exercise: {
+      type: ExerciseType,
+      args: {
+        id: { type: GraphQLID }
+      },
+      resolve: (parentValue, { id }) => Exercises.findById(id)
     }
   }
 })
@@ -90,6 +97,17 @@ const mutation = new GraphQLObjectType({
         date: { type: GraphQLFloat }
       },
       resolve: (parentValue, args) => Exercises.addExercise(args)
+    },
+    editExercise: {
+      type: ExerciseType,
+      args: {
+        id: { type: new GraphQLNonNull(GraphQLID) },
+        title: { type: GraphQLString },
+        description: { type: GraphQLString },
+        duration: { type: GraphQLInt },
+        date: { type: GraphQLFloat }
+      },
+      resolve: (parentValue, args) => Exercises.editExercise(args)
     }
   }
 })
