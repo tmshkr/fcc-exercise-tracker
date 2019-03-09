@@ -1,0 +1,18 @@
+body {
+  background: #424242;
+  margin: 0;
+  height: 100vh;
+  font-family: sans-serif;
+  text-align: center;
+  display: grid;
+  align-content: center;
+}
+
+#main {
+  width: 100%;
+  min-height: 50vh;
+  max-width: 500px;
+  margin: 1em auto;
+}
+
+/*# sourceMappingURL=main.css.map */

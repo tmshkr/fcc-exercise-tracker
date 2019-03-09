@@ -23,23 +23,16 @@ app.use(
 	})
 );
 
-
 app.use(express.static('public'))
 
 
-app.get('/', (req, res) => {
-  res.sendFile(__dirname + '/views/index.html')
-});
-
-// react-starter
-// http://expressjs.com/en/starter/basic-routing.html
-app.get("/", function(request, response) {
-  response.sendFile(__dirname + '/app/index.html');
+app.get('*', (req, res) => {
+  res.sendFile(__dirname + '/public/index.html')
 });
 
 
-const apiRouter = require('./rest/api')
-app.use('/api/exercise', apiRouter)
+// const apiRouter = require('./rest/api')
+// app.use('/api/exercise', apiRouter)
 
 // Not found middleware
 app.use((req, res, next) => {

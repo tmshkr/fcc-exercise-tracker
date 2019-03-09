@@ -1,38 +1,67 @@
 {
-	"name": "fcc-exercise-tracker",
-	"version": "0.1.0",
-	"description": "A REST API project, part of Free Code Camp's curriculum",
-	"main": "server.js",
-	"scripts": {
-		"build": "webpack",
-    "start": "webpack && node server.js"
-	},
-	"dependencies": {
-    "axios": "^0.15.3",
-		"express": "^4.14.0",
-		"mongoose": "^4.7.2",
-		"mongodb": "^2.2.14",
-		"body-parser": "^1.15.2",
-		"cors": "^2.8.1",
-		"shortid": "^2.2.6",
+  "name": "fcc-exercise-tracker",
+  "version": "0.1.0",
+  "description": "A GraphQL API project, based on Free Code Camp's curriculum",
+  "main": "server.js",
+  "scripts": {
+    "build": "webpack",
+    "server": "nodemon server.js",
+    "sass": "sass public/main.scss public/main.css --watch",
+    "dev": "concurrently 'npm run sass' 'npm run server'",
+    "start": "npm run build && npm run server"
+  },
+  "dependencies": {
+    "@date-io/date-fns": "^0.0.2",
+    "@date-io/luxon": "^1.1.0",
+    "@date-io/moment": "^1.1.0",
+    "@material-ui/core": "^3.6.2",
+    "@material-ui/icons": "^3.0.1",
+    "@material-ui/styles": "^3.0.0-alpha.10",
+    "apollo-cache-inmemory": "^1.5.1",
+    "apollo-client": "^2.5.1",
+    "apollo-link-http": "^1.5.11",
+    "body-parser": "^1.15.2",
+    "classnames": "^2.2.6",
+    "cors": "^2.8.1",
+    "date-fns": "^2.0.0-alpha.27",
+    "express": "^4.14.0",
     "express-graphql": "^0.6.1",
-		"graphql": "^0.8.2",
-    "jsx-loader": "^0.13.2",
+    "graphql": "^0.8.2",
+    "graphql-tag": "^2.10.1",
+    "luxon": "^1.11.4",
+    "material-ui-pickers": "^2.2.4",
+    "moment": "^2.24.0",
+    "mongodb": "^2.2.14",
+    "mongoose": "^4.7.2",
+    "prop-types": "^15.7.2",
     "react": "^16.2.0",
+    "react-apollo": "^2.5.1",
     "react-dom": "^16.2.0",
-    "webpack": "^4.1.1",
+    "react-router": "^4.3.1",
+    "react-router-dom": "^4.3.1",
+    "shortid": "^2.2.6"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.3.4",
+    "@babel/plugin-proposal-class-properties": "^7.3.4",
+    "@babel/preset-env": "^7.3.4",
+    "@babel/preset-react": "^7.0.0",
+    "babel-loader": "^8.0.5",
+    "concurrently": "^4.1.0",
+    "nodemon": "^1.18.10",
+    "sass": "^1.17.2",
+    "webpack": "^4.29.6",
     "webpack-cli": "^3.2.3"
-	},
-	"engines": {
-		"node": "8.x"
-	},
-	"repository": {
-		"url": "https://gomix.com/#!/project/welcome-project"
-	},
-	"license": "MIT",
-	"keywords": [
-		"node",
-		"gomix",
-		"express"
-	]
+  },
+  "engines": {
+    "node": "8.x"
+  },
+  "repository": {
+    "url": "https://api.glitch.com/tmshkr-fcc-exercise-tracker/git"
+  },
+  "license": "MIT",
+  "keywords": [
+    "node",
+    "express"
+  ]
 }
