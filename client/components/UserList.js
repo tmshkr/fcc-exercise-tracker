@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { withStyles } from '@material-ui/core/styles';
 import List from '@material-ui/core/List';
@@ -69,7 +68,7 @@ class UserList extends Component {
     if (e.which === 13) {
       this.addUser(this.state.newUsername);
       this.setState({ newUsername: ''});
-      e.target.blur()
+      e.target.blur();
     }
   }
   
@@ -116,12 +115,7 @@ class UserList extends Component {
   }
 }
 
-UserList.propTypes = {
-  classes: PropTypes.object.isRequired,
-  data: PropTypes.object.isRequired,
-  history: PropTypes.object.isRequired,
-  mutate: PropTypes.func.isRequired
-};
+
 
 const mutation = gql`
   mutation AddUser($username: String!) {

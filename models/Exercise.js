@@ -44,6 +44,7 @@ Exercise.statics.findByUserId = function(userId, args) {
       $lt: to ? new Date(to) : Date.now()
     }})
     .limit(limit)
+    .sort("-date")
 }
 
 Exercise.statics.findByUsername = function(username, args) {
