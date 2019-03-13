@@ -1,21 +1,15 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { graphql } from "react-apollo";
 import gql from "graphql-tag";
 
-// import MomentUtils from '@date-io/moment';
 import LuxonUtils from '@date-io/luxon';
 import { MuiPickersUtilsProvider, DatePicker } from 'material-ui-pickers';
 import { withStyles } from '@material-ui/core/styles';
-import List from '@material-ui/core/List';
 import TextField from '@material-ui/core/TextField';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
-import FitnessCenterIcon from '@material-ui/icons/FitnessCenter';
+import SaveIcon from '@material-ui/icons/Save';
+import KeyboardArrowLeftIcon from '@material-ui/icons/KeyboardArrowLeft';
 import Button from '@material-ui/core/Button';
-import Typography from '@material-ui/core/Typography';
 
 
 const styles = theme => ({
@@ -24,19 +18,24 @@ const styles = theme => ({
     flexWrap: 'wrap',
   },
   textField: {
-    marginLeft: theme.spacing.unit,
-    marginRight: theme.spacing.unit,
-  },
-  datePicker: {
-    marginLeft: theme.spacing.unit,
-    marginRight: theme.spacing.unit,
+    marginLeft: theme.spacing.unit
   },
   dense: {
     marginTop: 16,
   },
-  menu: {
-    width: 200,
+  description: {
+    marginLeft: theme.spacing.unit,
+    marginRight: theme.spacing.unit,
+    width: "100%"
   },
+  buttonIcon: {
+    marginRight: theme.spacing.unit
+  },
+  title: {
+    marginLeft: theme.spacing.unit,
+    marginRight: theme.spacing.unit,
+    width: "calc(100% - 16px)"
+  }
 });
 
 
@@ -46,7 +45,7 @@ class ExerciseDetail extends Component {
     super(props);
     this.state = {
       date: new Date(),
-      duration: 0,
+      duration: "",
       description: '',
       title: '',
       initialState: true
@@ -89,10 +88,21 @@ class ExerciseDetail extends Component {
     this.setState({ date });
   };
   
+  handleDuration(e) {
+    const { value } = e.target;
+    if (!(value <= 0) && !/\D/.test(value)) { // only accepts non-negative digits
+      this.setState({ duration: value });
+    }
+    else if (value == 0) {
+      this.setState({ duration: "" });
+    }
+  }
+  
   updateData() {
     const { match, mutate } = this.props;
     const { title, date, duration, description } = this.state;
-		mutate({
+		
+    mutate({
       variables: {
         id: match.params.id,
         title,
@@ -105,57 +115,65 @@ class ExerciseDetail extends Component {
   
   render() {
     const { classes, data, history } = this.props;
-    const { error, date, initialState } = this.state;
+    const { error, date, description, duration, initialState, title } = this.state;
     
     if(initialState) return <div></div>;
-        
+            
     
     return (
       
         <div className={classes.root}>
-          <Button onClick={history.goBack}>
-            Go Back
-          </Button>
-          <TextField
-            label="Title"
-            className={classes.textField}
-            value={this.state.title}
-            onChange={e => this.handleChange(e, 'title')}
-            margin="normal"
-            variant="outlined"
-          />
           <form className={classes.container} noValidate autoComplete="off">
-            <MuiPickersUtilsProvider utils={LuxonUtils}>
-              <DatePicker
+            <div style={{width: "100%"}}>
+              <TextField
+                className={classes.title}
+                variant="outlined"
+                label="Title"
+                value={title}
+                onChange={e => this.handleChange(e, 'title')}
                 margin="normal"
-                label="Date picker"
-                className={classes.datePicker}
-                value={date}
-                onChange={this.handleDateChange.bind(this)}
               />
-            </MuiPickersUtilsProvider>
-            <TextField
-              label="Duration"
-              value={this.state.duration}
-              onChange={e => this.handleChange(e, 'duration')}
-              type="number"
-              className={classes.textField}
-              InputLabelProps={{
-                shrink: true,
-              }}
-              margin="normal"
-            />
+            </div>
+            <div style={{width: "100%"}}>
+              <MuiPickersUtilsProvider utils={LuxonUtils}>
+                <DatePicker
+                  margin="normal"
+                  label="Date"
+                  variant="outlined"
+                  className={classes.datePicker}
+                  value={date}
+                  onChange={this.handleDateChange.bind(this)}
+                />
+              </MuiPickersUtilsProvider>
+              <TextField
+                label="Duration (min)"
+                value={duration > 0 ? duration : ""}
+                onChange={this.handleDuration.bind(this)}
+                variant="outlined"
+                className={classes.textField}
+                margin="normal"
+              />
+            </div>
             <TextField
               label="Description"
-              className={classes.textField}
-              value={this.state.description}
+              className={classes.description}
+              multiline
+              rows="4"
+              value={description}
               onChange={e => this.handleChange(e, 'description')}
               margin="normal"
               variant="outlined"
             />
-            <Button onClick={this.updateData.bind(this)}>
-              Update
-            </Button>
+            <div style={{width: "100%", margin: "16px 0"}}>
+              <Button onClick={history.goBack}>
+                <KeyboardArrowLeftIcon className={classes.buttonIcon} />
+                Go Back
+              </Button>
+              <Button onClick={this.updateData.bind(this)}>
+                <SaveIcon className={classes.buttonIcon} />
+                Save
+              </Button>
+            </div>
           </form>
         </div>
       
@@ -163,47 +181,45 @@ class ExerciseDetail extends Component {
   }
 }
 
-ExerciseDetail.propTypes = {
-  classes: PropTypes.object.isRequired,
-};
+
 
 const mutation = gql`
-mutation EditExercise(
-  $id: ID! 
-  $title: String 
-  $description: String 
-  $duration: Int 
-  $date: Float
-) {
-  editExercise(
-    id: $id
-    title: $title
-    description: $description
-    duration: $duration
-  	date: $date
+  mutation EditExercise(
+    $id: ID! 
+    $title: String 
+    $description: String 
+    $duration: Int 
+    $date: Float
   ) {
-    id
-    title
-    description
-    duration
-    date
-    userId
-    username
+    editExercise(
+      id: $id
+      title: $title
+      description: $description
+      duration: $duration
+      date: $date
+    ) {
+      id
+      title
+      description
+      duration
+      date
+      userId
+      username
+    }
   }
-}
 `
 
 const query = gql`
-query GetExercise($id: ID!){
-  exercise(id: $id) {
-    id
-    title
-    date
-    duration
-    description
-    userId
+  query GetExercise($id: ID!){
+    exercise(id: $id) {
+      id
+      title
+      date
+      duration
+      description
+      userId
+    }
   }
-}
 `
 
 

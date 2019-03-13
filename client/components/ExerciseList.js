@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { graphql } from "react-apollo";
 import gql from "graphql-tag";
@@ -11,6 +10,7 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import FitnessCenterIcon from '@material-ui/icons/FitnessCenter';
+import KeyboardArrowLeftIcon from '@material-ui/icons/KeyboardArrowLeft';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 
@@ -103,12 +103,6 @@ class ExerciseList extends Component {
     return (
       <div className={classes.root}>
         <List component="nav">
-          <Button onClick={history.goBack}>
-            Go Back
-          </Button>
-          { (exercises.length > 0)
-            ? exercises.map(exercise => this.renderListItem(exercise))
-            : noExercisesDialog }
           <ListItem>
             <TextField
               error={error && true}
@@ -120,17 +114,22 @@ class ExerciseList extends Component {
               className={classNames(classes.textField)}
             />
           </ListItem>
+          
+          { (exercises.length > 0)
+            ? exercises.map(exercise => this.renderListItem(exercise))
+            : noExercisesDialog }
+          
         </List>
+        <Button onClick={history.goBack}>
+          <KeyboardArrowLeftIcon />
+          Go Back
+        </Button>
       </div>
     );
   }
 }
 
-ExerciseList.propTypes = {
-  classes: PropTypes.object.isRequired,
-  data: PropTypes.object.isRequired,
-  history: PropTypes.object.isRequired
-};
+
 
 const mutation = gql`
 mutation AddExercise($userId: ID! $title: String!) {
